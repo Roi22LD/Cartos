@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="es">
+<head>
+<script>
+(function(){
+  const APP_VERSION='final-1';
+  if(localStorage.getItem('miEconomiaAppVersion')!==APP_VERSION){
+    /* PRESERVED DATA: localStorage.removeItem('miEconomiaMovimientos') */;
+    /* PRESERVED DATA: localStorage.removeItem('miEconomiaPeriodo') */;
+    /* PRESERVED DATA: localStorage.removeItem('miEconomiaCashback') */;
+    /* PRESERVED DATA: localStorage.removeItem('miEconomiaArchivos') */;
+    localStorage.setItem('miEconomiaAppVersion',APP_VERSION);
+  }
+})();
+</script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b8f62">
+<title>Mi Economía</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f8f7;color:#1f2a33}.app{display:flex;min-height:100vh}.side{width:220px;background:#fff;border-right:1px solid #e2e8e5;padding:20px 12px}.brand{font-size:19px;font-weight:800;padding:8px 10px 22px}.brand span{color:#0b8f62}.nav button{display:block;width:100%;border:0;background:none;text-align:left;padding:11px 12px;margin:3px 0;border-radius:9px;color:#667078;cursor:pointer;font-size:13px}.nav button.active,.nav button:hover{background:#e5f6ef;color:#0b8f62;font-weight:700}.main{flex:1;padding:22px;max-width:1450px;margin:auto}.mobiletopnav{display:none}.topbar{display:flex;align-items:center;gap:12px;margin-bottom:18px}.topbar h1{margin:0;font-size:26px}.topbar p{margin:4px 0 0;color:#778188;font-size:12px}.gear{margin-left:auto;border:0;background:#fff;border:1px solid #e1e7e4;border-radius:12px;padding:9px 12px;font-size:20px}.periodHero{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#f0fbf7,#fff);border:1px solid #d6eee5;border-radius:16px;padding:16px 18px;margin-bottom:16px}.calendarIcon{width:46px;height:46px;border-radius:14px;background:#e1f7ef;display:flex;align-items:center;justify-content:center;font-size:23px}.periodText{flex:1}.periodText .small{font-size:12px;color:#778188;margin-bottom:4px}.periodText b{font-size:18px}.periodBadge{background:#e3f7f1;color:#146e55;border-radius:20px;padding:9px 13px;font-size:12px;font-weight:700}.periodActions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:16px}.secondary,.add,.save{border-radius:9px;padding:9px 12px;font-weight:700;cursor:pointer}.secondary{border:1px solid #dce4e0;background:#fff;color:#4e585d}.add,.save{border:0;background:#0b8f62;color:#fff}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px}.card{background:#fff;border:1px solid #e0e7e3;border-radius:16px;padding:16px;min-height:105px;box-shadow:0 2px 10px rgba(31,42,51,.035)}.card .label{font-size:12px;color:#6f797f}.value{font-size:25px;font-weight:800;margin-top:10px}.income .value{color:#168e69}.expense .value{color:#e1494f}.saving .value{color:#694bd5}.invest .value{color:#148f79}.available .value{color:#168e69}.closing .value{color:#26313a}.miniCards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}.miniCard{background:#fff;border:1px solid #e0e7e3;border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:12px}.miniCard.savingMini{background:#f5f0ff}.miniCard.investMini{background:#eefaf7}.miniIcon{font-size:23px}.miniCard .label{font-size:12px;color:#777}.miniCard b{display:block;font-size:20px;margin-top:5px}.dashboardGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.panel{background:#fff;border:1px solid #e0e7e3;border-radius:16px;padding:18px;box-shadow:0 2px 10px rgba(31,42,51,.035)}.panel h3{font-size:17px;margin:0 0 6px}.sub{font-size:12px;color:#778188;margin:0 0 12px}.empty{text-align:center;color:#9aa2a7;font-size:12px;padding:35px}.catrow{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #eef1f0;font-size:12px}.table{width:100%;border-collapse:collapse;font-size:11px}.table th,.table td{text-align:left;padding:10px 8px;border-bottom:1px solid #e8ecea}.table th{color:#737c82;background:#fafbfa}.incomeText{color:#0b8f62;font-weight:700}.expenseText{color:#d95c67;font-weight:700}.page{display:none}.page.active{display:block}.form{max-width:650px;background:#fff;border:1px solid #e0e7e3;border-radius:16px;padding:20px;margin-top:18px}.switch{display:flex;gap:8px;margin-bottom:18px}.switch button{flex:1;padding:11px;border:1px solid #e1e6e4;background:#fff;border-radius:9px;font-weight:700;cursor:pointer}.switch .sel{background:#e8f6f0;color:#0b8f62;border-color:#bce5d5}.field{margin:12px 0}.field label{display:block;font-size:11px;color:#687075;margin-bottom:5px}.field input,.field select,.field textarea{width:100%;padding:11px;border:1px solid #dce1df;border-radius:8px;font:inherit}.save{width:100%;margin-top:7px}.hint{font-size:10px;color:#8b9296}.archive{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.archiveCard{background:#fff;border:1px solid #e2e8e5;border-radius:12px;padding:15px}.archiveCard h4{margin:0 0 8px;font-size:13px}.archiveCard p{margin:4px 0;font-size:11px;color:#70777d}.archiveCard b{font-size:18px}.modal{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}.modalBox{background:#fff;border-radius:14px;padding:20px;max-width:420px;width:100%;box-shadow:0 10px 40px rgba(0,0,0,.18)}.modalBox h3{margin:0 0 8px}.modalBox p{font-size:12px;color:#70777d}.modalBtns{display:flex;gap:8px;margin-top:15px}.modalBtns button{flex:1}.statsChartWrap{display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:wrap;padding:8px 4px 14px}.pieBox{width:min(330px,82vw);height:min(330px,82vw);display:flex;align-items:center;justify-content:center}#expensePieChart{width:100%;height:100%;display:block}.pieLegend{width:220px;max-width:100%;display:flex;flex-direction:column;gap:9px}.pieLegendRow{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px}.pieLegendName{display:flex;align-items:center;gap:7px;min-width:0}.pieLegendDot{width:11px;height:11px;border-radius:50%;flex:0 0 11px}.pieLegendPct{font-weight:800;white-space:nowrap}.latestPanel{margin-top:14px}.fullPanel{margin-top:14px}.sectionHeader{display:flex;align-items:center;justify-content:space-between;gap:10px}.linkBtn{border:0;background:none;color:#0b8f62;font-weight:700;cursor:pointer}.quickChart{margin-top:14px}.quickChart .statsChartWrap{padding-bottom:0}.balanceWrap{height:190px}.mobilebar{display:none}
+@media(max-width:900px){.side{display:none}.main{padding:14px 12px 28px}.mobiletopnav{display:flex;gap:5px;align-items:center;margin-bottom:14px;background:#fff;border:1px solid #e2e6e4;border-radius:14px;padding:5px;position:sticky;top:0;z-index:20;box-shadow:0 2px 8px rgba(0,0,0,.04)}.mobiletopnav button{flex:1;border:0;background:transparent;color:#626a70;border-radius:10px;padding:10px 5px;font-size:11px;font-weight:700;cursor:pointer}.mobiletopnav button.active{background:#dff5ec;color:#0b8f62}.topbar{margin-bottom:14px}.topbar h1{font-size:24px}.gear{font-size:18px}.cards{grid-template-columns:repeat(2,1fr)}.dashboardGrid{grid-template-columns:1fr}.periodHero{padding:14px}.periodBadge{display:none}.periodText b{font-size:17px}.periodActions .secondary:nth-child(1),.periodActions .secondary:nth-child(2){flex:1}.periodActions .add{flex:1}.table{font-size:10px}.table th,.table td{padding:8px 5px}.latestPanel{overflow-x:auto}.latestPanel .table{min-width:590px}}
+@media(max-width:560px){.cards{grid-template-columns:1fr 1fr}.card{min-height:100px;padding:14px}.value{font-size:21px}.miniCards{gap:8px}.miniCard{padding:13px 12px}.miniCard b{font-size:18px}.periodHero{border-radius:15px}.calendarIcon{width:42px;height:42px;font-size:20px}.periodText b{font-size:16px}.periodText .small{font-size:11px}.periodActions{gap:6px}.periodActions button{font-size:10px;padding:8px}.topbar p{font-size:11px}.panel{padding:15px}.panel h3{font-size:16px}}
+</style>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0b8f62">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="icon" href="icons/icon-192.png" sizes="192x192" type="image/png">
+
+<script>
+/* Mi Economía - protección de datos locales */
+(function () {
+  const originalClear = Storage.prototype.clear;
+  Storage.prototype.clear = function () {
+    console.warn("Mi Economía: se evitó un borrado completo del almacenamiento local.");
+    return undefined;
+  };
+})();
+</script>
+
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<link rel="apple-touch-icon" href="icon-512.png">
+<link rel="manifest" href="manifest.json">
+
+</head>
+<body>
+<div class="app">
+<aside class="side">
+<div class="brand">Mi <span>Economía</span></div>
+<div class="nav">
+<button class="active" onclick="show('inicio',this)">⌂ &nbsp; Inicio</button>
+<button onclick="show('movimientos',this)">☷ &nbsp; Movimientos</button>
+<button onclick="show('estadisticas',this)">◔ &nbsp; Estadísticas</button>
+<button onclick="show('presupuestos',this)">▣ &nbsp; Presupuestos</button>
+<button onclick="show('ahorro',this)">◉ &nbsp; Ahorro</button>
+<button onclick="show('inversion',this)">↗ &nbsp; Inversión</button>
+<button onclick="show('metas',this)">☆ &nbsp; Metas</button>
+<button onclick="show('cuentas',this)">▤ &nbsp; Cuentas</button>
+<button onclick="show('categorias',this)">▦ &nbsp; Categorías</button>
+<button onclick="show('informes',this)">▤ &nbsp; Informes</button>
+<button onclick="show('config',this)">⚙ &nbsp; Configuración</button>
+</div>
+</aside>
+<main class="main">
+<div class="mobiletopnav">
+  <button class="active" onclick="show('inicio',this)">Inicio</button>
+  <button onclick="show('movimientos',this)">Movimientos</button>
+  <button onclick="show('estadisticas',this)">Estadísticas</button>
+</div>
+<section id="inicio" class="page active">
+<div class="topbar"><div><h1>Mi Economía</h1><p>Resumen de tu economía</p></div><button class="gear" title="Ajustes">⚙</button></div>
+<div class="periodHero"><div class="calendarIcon">📅</div><div class="periodText"><div class="small">Período actual</div><b id="periodLabel">28/08/2026 → 30/09/2026</b></div><div class="periodBadge">📅 Nómina</div></div>
+<div class="periodActions"><button class="secondary" onclick="editOpening()">Saldo inicial: <span id="openingLabel">0,00 €</span></button><button class="secondary" onclick="openArchive()">Antiguos meses</button><button class="add" onclick="openMovimientos()">＋ Añadir movimiento</button><button class="add" onclick="openNewPayroll()">Nueva nómina</button></div>
+<div class="cards">
+<div class="card available"><div class="label">Disponible</div><div id="available" class="value">0,00 €</div></div>
+<div class="card expense"><div class="label">Gastos</div><div id="expense" class="value">0,00 €</div></div>
+<div class="card income"><div class="label">Ingresos</div><div id="income" class="value">0,00 €</div></div>
+<div class="card closing"><div class="label">Saldo al cierre</div><div id="closing" class="value">0,00 €</div></div>
+</div>
+<div class="miniCards">
+<div class="miniCard savingMini"><div class="miniIcon">🐷</div><div><div class="label">Ahorro</div><b id="saving">0,00 €</b></div></div>
+<div class="miniCard investMini"><div class="miniIcon">📈</div><div><div class="label">Inversión</div><b id="invest">0,00 €</b></div><button class="secondary" style="margin-left:auto;padding:5px 8px;font-size:11px" onclick="toggleInvestment()"><span id="invToggle">＋</span> Detalle</button></div>
+</div>
+<div id="investmentDetails" class="panel" style="display:none;margin-bottom:14px"><div style="display:flex;justify-content:space-between;font-size:12px;margin:5px 0"><span>Inversión normal</span><b id="regularInv">0,00 €</b></div><div style="display:flex;justify-content:space-between;font-size:12px;margin:5px 0"><span>Cashback</span><b id="cashbackLabel">0,00 €</b></div><button class="add" style="margin-top:8px;padding:8px" onclick="addCashback()">＋ Añadir Cashback</button></div>
+<div class="dashboardGrid">
+<div class="panel"><div class="sectionHeader"><div><h3>¿Dónde se va tu dinero?</h3><p class="sub">Distribución de gastos por categoría</p></div><button class="linkBtn" onclick="show('estadisticas',document.querySelectorAll('.nav button')[2])">Ver todo ›</button></div><div class="quickChart"><div class="statsChartWrap"><div class="pieBox"><canvas id="expensePieChart" width="420" height="420"></canvas></div><div id="expensePieLegend" class="pieLegend"></div></div><div id="expensePieEmpty" class="empty" style="display:none">Todavía no hay gastos para mostrar.</div></div></div>
+<div class="panel"><h3>Evolución del saldo</h3><p class="sub">Cómo ha cambiado durante la nómina</p><div class="balanceWrap"><canvas id="balanceChart" style="width:100%;height:190px"></canvas></div></div>
+</div>
+<div class="panel latestPanel"><div class="sectionHeader"><h3>Últimos movimientos</h3><button class="linkBtn" onclick="openMovimientos()">Ver todos ›</button></div><div id="latest" class="empty">No hay movimientos todavía.</div></div>
+</section>
+
+<section id="movimientos" class="page">
+<button class="add" style="background:#eef2f0;color:#465057" onclick="show('inicio',document.querySelectorAll('.nav button')[0])">← Menú</button><div class="title"><h1>Movimientos</h1><p>Registra tus ingresos y gastos</p></div>
+<div id="savedBox" class="panel" style="display:none;max-width:620px;margin-top:18px;background:#e8f6f0;border-color:#bce5d5"><b style="color:#0b8f62">✓ Movimiento guardado correctamente</b><button class="add" style="margin-left:12px" onclick="show('inicio',document.querySelectorAll('.nav button')[0])">← Volver al menú</button></div><div class="form">
+<div class="switch"><button id="bi" class="sel" onclick="setType('ingreso')">🟢 Ingreso</button><button id="bg" onclick="setType('gasto')">🔴 Gasto</button></div>
+<div class="field"><label>Concepto</label><input id="concept" placeholder="Ej.: Nómina Roi"></div>
+<div class="field" id="catWrap" style="display:none"><label>Categoría</label><select id="category"><option>Supermercado</option><option>Vivienda</option><option>Transporte</option><option>Ocio</option><option>Salud</option><option>Viajes</option><option>Suscripciones</option><option>Inversión</option></select></div>
+<div class="field"><label>Cantidad (€)</label><input id="amount" type="number" step="0.01" placeholder="0,00"></div>
+<div class="field"><label>Fecha</label><input id="date" type="date" value="2026-09-05"></div>
+<div class="field"><label>Nota (opcional)</label><textarea id="note" rows="2"></textarea></div>
+<button class="save" onclick="addMovement()">Guardar movimiento</button>
+<p class="hint">Si eliges Ingreso, no aparece ninguna categoría de gasto: solo concepto, cantidad y fecha.</p>
+</div>
+</section>
+
+<section id="estadisticas" class="page"><div class="title"><h1>Estadísticas</h1><p>Resumen visual de tus gastos en el período actual.</p></div><div class="panel" style="margin-top:18px"><div class="sectionHeader"><div><h3>¿Dónde se va tu dinero?</h3><p class="sub">Distribución de gastos por categoría</p></div><button class="linkBtn" onclick="show('inicio',document.querySelectorAll('.nav button')[0])">← Inicio</button></div><div class="statsChartWrap"><div class="pieBox"><canvas id="expensePieChartStats" width="420" height="420"></canvas></div><div id="expensePieLegendStats" class="pieLegend"></div></div><div id="expensePieEmptyStats" class="empty" style="display:none">Todavía no hay gastos para mostrar.</div></div><div class="panel" style="margin-top:14px"><h3>Gastos por categoría</h3><div id="statsCategories" class="empty">Todavía no hay gastos.</div></div></section>
+<section id="presupuestos" class="page"><div class="title"><h1>Presupuestos</h1><p>Control por categoría.</p></div><div class="panel" style="margin-top:18px"><div class="empty">Todavía no hay presupuestos.</div></div></section>
+<section id="ahorro" class="page"><div class="title"><h1>Ahorro</h1><p>Seguimiento del ahorro.</p></div><div class="panel" style="margin-top:18px"><div class="empty">Añade movimientos para ver tu ahorro.</div></div></section>
+<section id="inversion" class="page"><div class="title"><h1>Inversión</h1><p>Seguimiento de inversiones.</p></div><div class="panel" style="margin-top:18px"><div class="empty">Aquí podrás controlar tus inversiones.</div></div></section>
+<section id="metas" class="page"><div class="title"><h1>Metas</h1><p>Objetivos financieros.</p></div><div class="panel" style="margin-top:18px"><div class="empty">Todavía no hay metas.</div></div></section>
+<section id="cuentas" class="page"><div class="title"><h1>Cuentas</h1><p>Control de cuentas.</p></div><div class="panel" style="margin-top:18px"><div class="empty">Todavía no hay cuentas.</div></div></section>
+<section id="categorias" class="page"><div class="title"><h1>Categorías</h1><p>Solo las categorías que has elegido.</p></div><div class="panel" style="margin-top:18px">
+<div class="catrow">🛒 Supermercado <b>Gasto</b></div><div class="catrow">🏠 Vivienda <b>Gasto</b></div><div class="catrow">🚗 Transporte <b>Gasto</b></div><div class="catrow">🎮 Ocio <b>Gasto</b></div><div class="catrow">🩺 Salud <b>Gasto</b></div><div class="catrow">✈️ Viajes <b>Gasto</b></div><div class="catrow">📱 Suscripciones <b>Gasto</b></div><div class="catrow">📈 Inversión <b>Gasto</b></div>
+</div></section>
+<section id="informes" class="page"><div class="title"><h1>Informes</h1><p>Resumen de tus periodos de nómina.</p></div><div class="panel" style="margin-top:18px"><div class="empty">Aquí aparecerán tus informes.</div></div></section>
+<section id="config" class="page"><div class="title"><h1>Configuración</h1><p>Configuración de Mi Economía.</p></div><div class="panel" style="margin-top:18px"><div class="empty">Configuración.</div></div></section>
+
+<section id="archivo" class="page">
+<div class="top"><div class="title"><h1>Antiguos meses</h1><p>Consulta cómo te fue en cada periodo de nómina.</p></div><button class="secondary" onclick="show('inicio',document.querySelectorAll('.nav button')[0])">← Inicio</button></div>
+<div id="archiveList" class="archive" style="margin-top:18px"><div class="empty">Todavía no hay meses cerrados.</div></div>
+</section>
+
+<div id="modal" class="modal"><div class="modalBox" id="modalBox"></div></div>
+</main></div>
+<script>
+let type='ingreso',moves=JSON.parse(localStorage.getItem('miEconomiaMovimientos')||'[]');
+let period=JSON.parse(localStorage.getItem('miEconomiaPeriodo')||'null')||{start:'2026-08-28',end:'2026-09-30',opening:0};
+let cashback=parseFloat(localStorage.getItem('miEconomiaCashback')||'0')||0;
+let archives=JSON.parse(localStorage.getItem('miEconomiaArchivos')||'[]');
+function show(id,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button,.mobiletopnav button').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');document.querySelectorAll('.mobiletopnav button').forEach(b=>{if(b.textContent.trim().toLowerCase()===id || (id==='inicio'&&b.textContent.trim().toLowerCase()==='inicio') || (id==='movimientos'&&b.textContent.trim().toLowerCase()==='movimientos') || (id==='estadisticas'&&b.textContent.trim().toLowerCase()==='estadísticas')) b.classList.add('active')});}
+function openMovimientos(){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('movimientos').classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.nav button')[1].classList.add('active');document.getElementById('savedBox').style.display='none';window.scrollTo(0,0);} function goMov(){show('inicio',document.querySelectorAll('.nav button')[0]);} function showSaved(){document.getElementById('savedBox').style.display='block';}
+function setType(t){type=t;bi.classList.toggle('sel',t==='ingreso');bg.classList.toggle('sel',t==='gasto');catWrap.style.display=t==='gasto'?'block':'none';concept.placeholder=t==='ingreso'?'Ej.: Nómina Roi':'Ej.: Compra Mercadona'}
+function eur(n){return n.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'}
+function addMovement(){
+ const c=concept.value.trim(),a=parseFloat(amount.value),d=date.value;
+ if(!c||!a||!d){alert('Completa concepto, cantidad y fecha.');return}
+ moves.push({type,concept:c,amount:a,date:d,category:type==='gasto'?category.value:'Ingreso'});
+ persist();
+ update();concept.value='';amount.value='';note.value='';showSaved();
+}
+function editMovement(i){
+ const x=moves[i];
+ openMovimientos();
+ setType(x.type);
+ document.getElementById('concept').value=x.concept;
+ document.getElementById('amount').value=x.amount;
+ document.getElementById('date').value=x.date;
+ if(x.type==='gasto') document.getElementById('category').value=x.category;
+ const btn=document.querySelector('.save');
+ btn.textContent='Guardar cambios';
+ btn.onclick=function(){
+   const c=document.getElementById('concept').value.trim(), a=parseFloat(document.getElementById('amount').value), d=document.getElementById('date').value;
+   if(!c||!a||!d){alert('Completa concepto, cantidad y fecha.');return}
+   moves[i]={type,concept:c,amount:a,date:d,category:type==='gasto'?document.getElementById('category').value:'Ingreso'};
+   persist(); update(); btn.textContent='Guardar movimiento'; btn.onclick=addMovement; document.getElementById('savedBox').style.display='block';
+ };
+}
+function persist(){localStorage.setItem('miEconomiaMovimientos',JSON.stringify(moves));localStorage.setItem('miEconomiaPeriodo',JSON.stringify(period));localStorage.setItem('miEconomiaArchivos',JSON.stringify(archives));localStorage.setItem('miEconomiaCashback',cashback)}
+function fmtDate(s){return new Date(s+'T12:00:00').toLocaleDateString('es-ES')}
+function updatePeriodLabels(){document.getElementById('periodLabel').textContent=fmtDate(period.start)+' → '+fmtDate(period.end);document.getElementById('openingLabel').textContent=eur(period.opening)}
+function currentClosing(){const inc=moves.filter(x=>x.type==='ingreso').reduce((s,x)=>s+x.amount,0),exp=moves.filter(x=>x.type==='gasto').reduce((s,x)=>s+x.amount,0);return period.opening+inc-exp}
+function editOpening(){showModal('<h3>Saldo inicial</h3><p>¿Cuánto dinero tenías al comenzar esta nómina? Este importe no cuenta como ingreso: solo es el dinero que ya tenías.</p><div class="field"><label>Saldo inicial (€)</label><input id="modalOpening" type="number" step="0.01" value="'+period.opening+'"></div><div class="modalBtns"><button class="secondary" onclick="closeModal()">Cancelar</button><button class="add" onclick="saveOpening()">Guardar</button></div>')}
+function saveOpening(){const v=parseFloat(document.getElementById('modalOpening').value);if(isNaN(v)){alert('Introduce una cantidad.');return}period.opening=v;persist();closeModal();update()}
+function addCashback(){showModal('<h3>Inversión Cashback</h3><p>Introduce el cashback que se ha invertido durante esta nómina. No se considera un gasto ni reduce tu saldo disponible.</p><div class="field"><label>Cashback invertido (€)</label><input id="modalCashback" type="number" min="0" step="0.01" value="'+cashback+'"></div><div class="modalBtns"><button class="secondary" onclick="closeModal()">Cancelar</button><button class="add" onclick="saveCashback()">Guardar</button></div>')}
+function saveCashback(){const v=parseFloat(document.getElementById('modalCashback').value);if(isNaN(v)||v<0){alert('Introduce una cantidad válida.');return}cashback=v;persist();closeModal();update();document.getElementById('investmentDetails').style.display='block';document.getElementById('invToggle').textContent='−'}
+function toggleInvestment(){const el=document.getElementById('investmentDetails');const open=el.style.display==='block';el.style.display=open?'none':'block';document.getElementById('invToggle').textContent=open?'＋':'−'}
+function openArchive(){show('archivo',null);document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));renderArchives()}
+function renderArchives(){const el=document.getElementById('archiveList');el.innerHTML=archives.length?archives.slice().reverse().map((a,i)=>'<div class="archiveCard"><h4>'+a.label+'</h4><p>Saldo inicial</p><b>'+eur(a.opening)+'</b><p>Ingresos: <b style="font-size:13px;color:#0b8f62">'+eur(a.income)+'</b></p><p>Gastos: <b style="font-size:13px;color:#d95c67">'+eur(a.expenses)+'</b></p><p>Inversión: <b style="font-size:13px;color:#8a5bd5">'+eur(a.investment)+'</b></p><p>Cashback: <b style="font-size:13px;color:#8a5bd5">'+eur(a.cashback||0)+'</b></p><p>Saldo al cierre: <b style="font-size:13px">'+eur(a.closing)+'</b></p></div>').join(''):'<div class="empty">Todavía no hay meses cerrados.</div>'}
+function openNewPayroll(){const closing=currentClosing();showModal('<h3>Empezar nueva nómina</h3><p>Se guardará la nómina actual en «Antiguos meses». El saldo al cierre de esta nómina pasará a ser el saldo inicial de la siguiente.</p><div class="field"><label>Inicio de la nueva nómina</label><input id="newStart" type="date" value="'+period.end+'"></div><div class="field"><label>Fin de la nueva nómina</label><input id="newEnd" type="date" value="'+period.end+'"></div><p><b>Saldo que pasará a la siguiente: '+eur(closing)+'</b></p><div class="modalBtns"><button class="secondary" onclick="closeModal()">Cancelar</button><button class="add" onclick="confirmNewPayroll()">Guardar y empezar</button></div>')}
+function confirmNewPayroll(){const s=document.getElementById('newStart').value,e=document.getElementById('newEnd').value;if(!s||!e||e<s){alert('Revisa las fechas.');return}const inc=moves.filter(x=>x.type==='ingreso').reduce((z,x)=>z+x.amount,0),exp=moves.filter(x=>x.type==='gasto').reduce((z,x)=>z+x.amount,0),inv=moves.filter(x=>x.type==='gasto'&&x.category==='Inversión').reduce((z,x)=>z+x.amount,0)+cashback;archives.push({label:fmtDate(period.start)+' → '+fmtDate(period.end),start:period.start,end:period.end,opening:period.opening,income:inc,expenses:exp,investment:inv,cashback:cashback,closing:period.opening+inc-exp,moves:moves.slice()});period={start:s,end:e,opening:period.opening+inc-exp};moves=[];cashback=0;persist();closeModal();update();show('inicio',document.querySelectorAll('.nav button')[0])}
+function showModal(content){document.getElementById('modalBox').innerHTML=content;document.getElementById('modal').style.display='flex'}
+function closeModal(){document.getElementById('modal').style.display='none'}
+function deleteMovement(i){if(confirm('¿Eliminar este movimiento?')){moves.splice(i,1);persist();update();}}
+function drawChart(){
+ const canvas=document.getElementById('balanceChart'); if(!canvas)return;
+ const ctx=canvas.getContext('2d'), dpr=window.devicePixelRatio||1, w=canvas.clientWidth, h=canvas.clientHeight;
+ canvas.width=w*dpr;canvas.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
+ if(!moves.length && period.opening===0){ctx.fillStyle='#9aa1a5';ctx.font='12px Arial';ctx.textAlign='center';ctx.fillText('Añade movimientos para ver la evolución.',w/2,h/2);return}
+ const ordered=moves.slice().sort((a,b)=>a.date.localeCompare(b.date));
+ let bal=period.opening, vals=[bal]; ordered.forEach(x=>{bal += x.type==='ingreso'?x.amount:-x.amount; vals.push(bal)});
+ const pad={l:45,r:15,t:12,b:28}, min=Math.min(0,...vals), max=Math.max(1,...vals), range=max-min||1;
+ ctx.strokeStyle='#e6e9e7';ctx.lineWidth=1;
+ for(let i=0;i<4;i++){let y=pad.t+(h-pad.t-pad.b)*i/3;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke()}
+ ctx.strokeStyle='#0b8f62';ctx.lineWidth=2;ctx.beginPath();
+ vals.forEach((v,i)=>{let x=pad.l+(w-pad.l-pad.r)*(vals.length===1?0.5:i/(vals.length-1));let y=pad.t+(h-pad.t-pad.b)*(1-(v-min)/range);i?ctx.lineTo(x,y):ctx.moveTo(x,y)});
+ ctx.stroke();
+ ctx.fillStyle='#0b8f62';vals.forEach((v,i)=>{let x=pad.l+(w-pad.l-pad.r)*(vals.length===1?0.5:i/(vals.length-1));let y=pad.t+(h-pad.t-pad.b)*(1-(v-min)/range);ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fill()});
+ ctx.fillStyle='#777';ctx.font='10px Arial';ctx.textAlign='left';ctx.fillText(eur(max),5,pad.t+4);ctx.fillText(eur(min),5,h-pad.b);
+}
+
+function drawPieInto(canvasId,legendId,emptyId){
+  const canvas=document.getElementById(canvasId), legend=document.getElementById(legendId), empty=document.getElementById(emptyId);
+  if(!canvas||!legend||!empty)return;
+  const ctx=canvas.getContext('2d');
+  const totals={};
+  moves.filter(x=>x.type==='gasto').forEach(x=>{
+    const k=x.category||'Otros';
+    totals[k]=(totals[k]||0)+Number(x.amount||0);
+  });
+  const entries=Object.entries(totals).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]);
+  legend.innerHTML='';
+  if(!entries.length){
+    empty.style.display='block';
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    return;
+  }
+  empty.style.display='none';
+  const total=entries.reduce((s,[,v])=>s+v,0);
+  const colors=['#0b8f62','#4f83cc','#e7a23b','#d95c67','#8a5bd5','#35a6a6','#e07b39','#6f7b86'];
+  const rect=canvas.parentElement.getBoundingClientRect();
+  const size=Math.max(220,Math.min(330,rect.width||330));
+  const dpr=window.devicePixelRatio||1;
+  canvas.width=Math.round(size*dpr); canvas.height=Math.round(size*dpr);
+  canvas.style.width=size+'px'; canvas.style.height=size+'px';
+  ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,size,size);
+  const cx=size/2,cy=size/2,r=size*0.38;
+  let start=-Math.PI/2;
+  entries.forEach(([name,value],i)=>{
+    const angle=value/total*Math.PI*2;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,start,start+angle);ctx.closePath();ctx.fillStyle=colors[i%colors.length];ctx.fill();start+=angle;
+  });
+  ctx.beginPath();ctx.arc(cx,cy,r*0.58,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
+  ctx.fillStyle='#20252a';ctx.textAlign='center';ctx.textBaseline='middle';ctx.font='700 16px Arial';ctx.fillText(eur(total),cx,cy);
+  entries.forEach(([name,value],i)=>{
+    const row=document.createElement('div');row.className='pieLegendRow';
+    row.innerHTML=`<div class="pieLegendName"><span class="pieLegendDot" style="background:${colors[i%colors.length]}"></span><span>${name}</span></div><span class="pieLegendPct">${(value/total*100).toFixed(0)}% · ${eur(value)}</span>`;
+    legend.appendChild(row);
+  });
+}
+function drawExpensePie(){
+  drawPieInto('expensePieChart','expensePieLegend','expensePieEmpty');
+  drawPieInto('expensePieChartStats','expensePieLegendStats','expensePieEmptyStats');
+  const statsCats=document.getElementById('statsCategories');
+  if(statsCats){
+    const totals={}; moves.filter(x=>x.type==='gasto').forEach(x=>{const k=x.category||'Otros';totals[k]=(totals[k]||0)+Number(x.amount||0);});
+    const entries=Object.entries(totals).sort((a,b)=>b[1]-a[1]);
+    statsCats.className=entries.length?'':'empty';
+    statsCats.innerHTML=entries.length?entries.map(([k,v])=>`<div class="catrow"><span>${k}</span><b>${eur(v)}</b></div>`).join(''):'Todavía no hay gastos.';
+  }
+}
+
+function update(){
+  const incomeEl=document.getElementById('income');
+  const expenseEl=document.getElementById('expense');
+  const savingEl=document.getElementById('saving');
+  const availableEl=document.getElementById('available');
+  const closingEl=document.getElementById('closing');
+  const investEl=document.getElementById('invest');
+  const regularInvEl=document.getElementById('regularInv');
+  const cashbackLabelEl=document.getElementById('cashbackLabel');
+  const catsEl=document.getElementById('cats');
+  const latestEl=document.getElementById('latest');
+
+  const inc=moves.filter(x=>x.type==='ingreso').reduce((s,x)=>s+Number(x.amount||0),0);
+  const exp=moves.filter(x=>x.type==='gasto').reduce((s,x)=>s+Number(x.amount||0),0);
+  const regularInvestment=moves.filter(x=>x.type==='gasto'&&x.category==='Inversión').reduce((s,x)=>s+Number(x.amount||0),0);
+  const totalInvestment=regularInvestment+cashback;
+  const available=period.opening+inc-exp;
+
+  incomeEl.textContent=eur(inc);
+  expenseEl.textContent=eur(exp);
+  savingEl.textContent=eur(Math.max(0,inc-exp));
+  availableEl.textContent=eur(available);
+  closingEl.textContent=eur(available);
+  investEl.textContent=eur(totalInvestment);
+  regularInvEl.textContent=eur(regularInvestment);
+  cashbackLabelEl.textContent=eur(cashback);
+  updatePeriodLabels();
+
+  const totals={};
+  moves.filter(x=>x.type==='gasto').forEach(x=>{
+    const k=x.category||'Otros';
+    totals[k]=(totals[k]||0)+Number(x.amount||0);
+  });
+  const categoryEntries=Object.entries(totals);
+  catsEl.className=categoryEntries.length?'':'empty';
+  catsEl.innerHTML=categoryEntries.length
+    ?categoryEntries.map(([k,v])=>`<div class="catrow"><span>${k}</span><b>${eur(v)}</b></div>`).join('')
+    :'Todavía no hay gastos.<br>Los gastos aparecerán aquí por categoría.';
+
+  const ordered=moves.map((x,i)=>({...x,_i:i}))
+    .sort((a,b)=>b.date.localeCompare(a.date)||b._i-a._i);
+  latestEl.className=moves.length?'':'empty';
+  latestEl.innerHTML=moves.length
+    ?'<table class="table"><tr><th>Fecha</th><th>Concepto</th><th>Categoría</th><th>Tipo</th><th>Cantidad</th><th></th></tr>'+
+      ordered.map(x=>`<tr><td>${new Date(x.date+'T12:00:00').toLocaleDateString('es-ES')}</td><td>${x.concept}</td><td>${x.category||''}</td><td>${x.type}</td><td class="${x.type==='ingreso'?'incomeText':'expenseText'}">${x.type==='ingreso'?'+':'-'}${eur(Number(x.amount||0))}</td><td><button onclick="editMovement(${x._i})" style="border:0;background:#eef2f0;border-radius:5px;padding:5px 7px;cursor:pointer">✎</button> <button onclick="deleteMovement(${x._i})" style="border:0;background:#fff0f1;color:#c94f5b;border-radius:5px;padding:5px 7px;cursor:pointer">×</button></td></tr>`).join('')+'</table>'
+    :'No hay movimientos todavía.';
+
+  drawChart();
+  drawExpensePie();
+}
+
+update();
+window.addEventListener('resize',()=>{drawChart();drawExpensePie();}); renderArchives();
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(()=>{}));
+}
+</script>
+</body>
+</html>
